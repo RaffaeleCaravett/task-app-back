@@ -1,0 +1,5 @@
+package com.example.task.enums;
+
+public enum NomeMese {
+    GENNAIO,FEBBRAIO,MARZO,APRILE,MAGGIO,GIUGNO,LUGLIO,AGOSTO,SETTEMBRE,OTTOBRE,NOVEMBRE,DICEMBRE
+}
