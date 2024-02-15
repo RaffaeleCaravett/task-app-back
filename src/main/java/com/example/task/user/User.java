@@ -1,6 +1,7 @@
 package com.example.task.user;
 
 
+import com.example.task.calendario.Calendario;
 import com.example.task.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -32,7 +33,9 @@ public class User implements UserDetails {
     private int eta;
     @Enumerated(EnumType.STRING)
     private Role role;
-
+@ManyToMany(mappedBy = "userList",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+@JsonIgnore
+private List<Calendario> calendarioList;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(this.role.name()));

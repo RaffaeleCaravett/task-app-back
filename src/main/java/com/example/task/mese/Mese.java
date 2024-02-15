@@ -14,7 +14,7 @@ import java.util.List;
 public class Mese {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
     private NomeMese nomeMese;
     private int giorni;
     @ManyToMany(mappedBy = "meseList",fetch = FetchType.EAGER)
