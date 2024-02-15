@@ -4,17 +4,16 @@ import com.example.task.exception.BadRequestException;
 import com.example.task.mese.MeseService;
 import com.example.task.payloads.entities.CalendarioDTO;
 import com.example.task.user.UserService;
-import jakarta.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/controller")
 public class CalendarioController {
 
     @Autowired
@@ -39,13 +38,13 @@ public class CalendarioController {
         return calendarioService.getAll();
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
 public Calendario putById(@PathVariable long id, @RequestBody CalendarioDTO calendarioDTO){
         return calendarioService.modifyCalendario(id,calendarioDTO);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
 public boolean deleteById(@PathVariable long id){
         return  calendarioService.deletebyId(id);

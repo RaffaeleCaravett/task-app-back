@@ -23,14 +23,17 @@ public class TaskService {
     MeseRepository meseRepository;
 @Autowired
     UserRepository userRepository;
-    public List<Task> getAllByMeseId(long mese_id){
-       return taskRepository.findAllByMese_Id(mese_id);
-    }
-    public List<Task> getAllByUserId(long user_id){
+    public List<Task> findByMeseIdAndYear(long meseId, String year) {
+        LocalDate startDate = LocalDate.parse(year + "-01-01");
+        LocalDate endDate = LocalDate.parse(year + "-12-31");
+        return taskRepository.findAllByMese_IdAndDataBetween(meseId, startDate, endDate);
+    }    public List<Task> getAllByUserId(long user_id){
         return taskRepository.findAllByUser_Id(user_id);
     }
-    public List<Task> getAllByUserIdAndMeseId(long user_id,long mese_id){
-        return taskRepository.findAllByUser_IdAndMese_id(user_id,mese_id);
+    public List<Task> getAllByUserIdAndMeseId(long user_id,long mese_id,String year) {
+        LocalDate startDate = LocalDate.parse(year + "-01-01");
+        LocalDate endDate = LocalDate.parse(year + "-12-31");
+        return taskRepository.findAllByUser_IdAndMese_idAndDataBetween(user_id,mese_id, startDate, endDate);
     }
 
     public Task save(TaskDTO taskDTO){
@@ -71,5 +74,7 @@ return taskRepository.save(task);
 
         return taskRepository.findAll(pageable);
     }
-
+public Task getById(long task_id){
+        return  taskRepository.findById(task_id).get();
+}
 }

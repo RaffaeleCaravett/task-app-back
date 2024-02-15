@@ -87,4 +87,7 @@ public List<Calendario> getAll(){
         return calendarioRepository.findByAnno(anno);
     }
 
+    public Calendario getById(long calendario_id){
+   return calendarioRepository.findById(calendario_id).get();
+    }
 }
