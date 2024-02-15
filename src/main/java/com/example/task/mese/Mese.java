@@ -2,6 +2,7 @@ package com.example.task.mese;
 
 import com.example.task.calendario.Calendario;
 import com.example.task.enums.NomeMese;
+import com.example.task.task.Task;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,4 +21,7 @@ public class Mese {
     @ManyToMany(mappedBy = "meseList",fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Calendario> calendarioList;
+    @OneToMany(mappedBy = "mese")
+    @JsonIgnore
+    private List<Task>tasks;
 }

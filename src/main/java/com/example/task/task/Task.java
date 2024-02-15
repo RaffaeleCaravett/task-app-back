@@ -2,7 +2,6 @@ package com.example.task.task;
 
 import com.example.task.mese.Mese;
 import com.example.task.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 

@@ -12,6 +12,7 @@ public record CalendarioDTO (
         String tipoAnno,
         @NotNull(message = "Almeno un mese in questo anno")
         List<Long> mese_id,
-        long user_id
+        long user_id,
+        List<Long> user_ids
         ){
 }
