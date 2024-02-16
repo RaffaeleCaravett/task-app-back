@@ -49,4 +49,9 @@ public class MeseController {
         return meseService.getById(id);
     }
 
+    @GetMapping("/noTasks/{year}")
+    public List<Mese> getWithNoTasks(@PathVariable int year){
+        return meseService.getWithNoTasks(year);
+    }
+
 }

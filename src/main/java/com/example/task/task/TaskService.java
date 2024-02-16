@@ -27,10 +27,11 @@ public class TaskService {
         LocalDate startDate = LocalDate.parse(year + "-01-01");
         LocalDate endDate = LocalDate.parse(year + "-12-31");
         return taskRepository.findAllByMese_IdAndDataBetween(meseId, startDate, endDate);
-    }    public List<Task> getAllByUserId(long user_id){
+    }
+    public List<Task> getAllByUserId(long user_id){
         return taskRepository.findAllByUser_Id(user_id);
     }
-    public List<Task> getAllByUserIdAndMeseId(long user_id,long mese_id,String year) {
+    public List<Task> getAllByUserIdAndMeseIdAndYear(long user_id,long mese_id,String year) {
         LocalDate startDate = LocalDate.parse(year + "-01-01");
         LocalDate endDate = LocalDate.parse(year + "-12-31");
         return taskRepository.findAllByUser_IdAndMese_idAndDataBetween(user_id,mese_id, startDate, endDate);

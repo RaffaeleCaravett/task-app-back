@@ -76,5 +76,15 @@ public class MeseService {
             return false;
         }
     }
-
+public List<Mese> getWithNoTasks(int year){
+        List<Mese> meseList = new ArrayList<>();
+        for(Mese m : findAll()){
+            for(Calendario c : m.getCalendarioList()){
+                if (c.getAnno()==year&&m.getTasks().isEmpty()){
+                    meseList.add(m);
+                }
+            }
+        }
+        return meseList;
+}
 }
