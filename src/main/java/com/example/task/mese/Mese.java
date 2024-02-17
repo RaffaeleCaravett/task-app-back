@@ -16,6 +16,7 @@ public class Mese {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Enumerated(EnumType.STRING)
     private NomeMese nomeMese;
     private int giorni;
     @ManyToMany(mappedBy = "meseList",fetch = FetchType.EAGER)

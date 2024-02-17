@@ -2,9 +2,15 @@ package com.example.task.auth;
 
 
 
+import com.example.task.calendario.Calendario;
+import com.example.task.calendario.CalendarioRepository;
+import com.example.task.calendario.CalendarioService;
 import com.example.task.enums.Role;
+import com.example.task.enums.TipoAnno;
 import com.example.task.exception.BadRequestException;
 import com.example.task.exception.UnauthorizedException;
+import com.example.task.mese.Mese;
+import com.example.task.mese.MeseRepository;
 import com.example.task.payloads.entities.Token;
 import com.example.task.payloads.entities.UserLoginDTO;
 import com.example.task.payloads.entities.UserRegistrationDTO;
@@ -21,6 +27,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AuthService {
@@ -36,7 +45,11 @@ public class AuthService {
     @Autowired
     private PasswordEncoder bcrypt;
 
+    @Autowired
+    CalendarioService calendarioService;
 
+    @Autowired
+    MeseRepository meseRepository;
     public Token authenticateUser(UserLoginDTO body) throws Exception {
         // 1. Verifichiamo che l'email dell'utente sia nel db
         User user = usersService.findByEmail(body.email());
@@ -64,6 +77,23 @@ public class AuthService {
         newUser.setCognome(body.cognome());
         newUser.setEta(body.eta());
         newUser.setRole(Role.USER);
+        newUser.setCalendarioList(new ArrayList<>());
+
+
+        LocalDate localDate = LocalDate.now();
+        Calendario calendario= new Calendario();
+        calendario.setTipoAnno(TipoAnno.NORMALE);
+        if(localDate.getYear()%4==0||localDate.getYear()%100==0&&localDate.getYear()%400==0){
+                    calendario.setTipoAnno(TipoAnno.BISESTILE);
+        }
+        List<Mese> meseList = meseRepository.findAll();
+        calendario.setMeseList(meseList);
+        calendario.setAnno(localDate.getYear());
+        calendario.setUserList(new ArrayList<>());
+        calendario.getUserList().add(newUser);
+        newUser.getCalendarioList().add(calendarioService.saveCalendario(calendario));
+
+
         userRepository.save(newUser);
 
         return newUser;

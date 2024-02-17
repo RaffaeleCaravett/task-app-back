@@ -1,8 +1,9 @@
 package com.example.task.exception;
 
 
-import com.example.academy.payloads.errors.ErrorsDTO;
-import com.example.academy.payloads.errors.ErrorsWithListDTO;
+
+import com.example.task.payloads.errors.ErrorsDTO;
+import com.example.task.payloads.errors.ErrorsWithListDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

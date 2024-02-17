@@ -74,7 +74,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         // Ad es tutte le richieste al controller /auth/** non devono essere filtrate
         String pathWithArguments = request.getServletPath() + request.getQueryString();
 
-        List<String> excludedPaths = Arrays.asList("/auth","/secret");
+        List<String> excludedPaths = Arrays.asList("/auth");
 
         return excludedPaths.stream().anyMatch(pathWithArguments::startsWith);    }
 }

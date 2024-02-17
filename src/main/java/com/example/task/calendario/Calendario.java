@@ -6,7 +6,6 @@ import com.example.task.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.lang.foreign.MemorySegment;
 import java.util.List;
 
 @Entity
@@ -17,6 +16,7 @@ public class Calendario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 private int anno;
+@Enumerated(EnumType.STRING)
 private TipoAnno tipoAnno;
 @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 @JoinTable(name = "calendario_mese",

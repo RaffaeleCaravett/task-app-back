@@ -24,26 +24,37 @@ MeseRepository meseRepository;
     UserRepository userRepository;
 
 public Calendario save(CalendarioDTO calendarioDTO){
-    Calendario calendario= new Calendario();
-    calendario.setAnno(calendarioDTO.anno());
-    calendario.setTipoAnno(TipoAnno.valueOf(calendarioDTO.tipoAnno()));
-    List<Mese> meseList=new ArrayList<>();
-    for(Long l : calendarioDTO.mese_id()){
-        meseList.add(meseRepository.findById(l).get());
+   if(!calendarioRepository.findByAnno(calendarioDTO.anno()).isPresent()){
+       Calendario calendario = new Calendario();
+       calendario.setAnno(calendarioDTO.anno());
+       calendario.setTipoAnno(TipoAnno.valueOf(calendarioDTO.tipoAnno()));
+       List<Mese> meseList=new ArrayList<>();
+       for(Long l : calendarioDTO.mese_id()){
+           meseList.add(meseRepository.findById(l).get());
+       }
+       calendario.setMeseList(meseList);
+
+       List<User> userList =new ArrayList<>();
+
+       userList.add(userRepository.findById(calendarioDTO.user_id()).get());
+
+       for(Long l : calendarioDTO.user_ids()){
+           userList.add(userRepository.findById(l).get());
+       }
+
+       calendario.setUserList(userList);
+       return calendarioRepository.save(calendario);
+   }else{
+       return calendarioRepository.findByAnno(calendarioDTO.anno()).get();
+   }
+}
+
+public Calendario saveCalendario(Calendario calendario){
+    if(!calendarioRepository.findByAnno(calendario.getAnno()).isPresent()){
+        return calendarioRepository.save(calendario);
+    }else{
+        return calendarioRepository.findByAnno(calendario.getAnno()).get();
     }
-    calendario.setMeseList(meseList);
-
-    List<User> userList =new ArrayList<>();
-
-    userList.add(userRepository.findById(calendarioDTO.user_id()).get());
-
-    for(Long l : calendarioDTO.user_ids()){
-        userList.add(userRepository.findById(l).get());
-    }
-
-    calendario.setUserList(userList);
-    return calendarioRepository.save(calendario);
-
 }
 
 public boolean deletebyId(long calendario_id){
@@ -84,7 +95,7 @@ public List<Calendario> getAll(){
     return  calendarioRepository.findAll();
 }
     public Calendario findByAnno(int anno) {
-        return calendarioRepository.findByAnno(anno);
+        return calendarioRepository.findByAnno(anno).get();
     }
 
     public Calendario getById(long calendario_id){

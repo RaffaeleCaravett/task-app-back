@@ -1,6 +1,6 @@
 package com.example.task.security;
 
-import com.example.academy.exception.ExceptionsHandlerFilter;
+import com.example.task.exception.ExceptionsHandlerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
