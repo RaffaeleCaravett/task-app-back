@@ -23,9 +23,8 @@ public class UserController {
     };
 
     @DeleteMapping("/me")
-    @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
-    public void getProfile(@AuthenticationPrincipal User currentUser){
-        utenteService.findByIdAndDelete(currentUser.getId());
+    public boolean getProfile(@AuthenticationPrincipal User currentUser){
+        return utenteService.findByIdAndDelete(currentUser.getId());
     };
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
