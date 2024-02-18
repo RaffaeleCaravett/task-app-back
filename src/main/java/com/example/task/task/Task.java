@@ -19,7 +19,7 @@ private LocalDate data;
 private String ora;
 private int giornoDelMese;
 private int giornoDellaSettimana;
-private int giornoDellaSettimanaNome;
+private String giornoDellaSettimanaNome;
 @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mese_id")
     private Mese mese;

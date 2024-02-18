@@ -13,7 +13,7 @@ public record TaskDTO(
         @NotNull(message = "giornoS non presente")
         int giornoDellaSettimana,
         @NotNull(message = "giornoSN non presente")
-        int giornoDellaSettimanaNome,
+        String giornoDellaSettimanaNome,
         @NotEmpty(message="ora non presente")
         String ora,
         @NotNull(message = "mese_id non presente")

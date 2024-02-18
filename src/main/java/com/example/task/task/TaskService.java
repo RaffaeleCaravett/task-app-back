@@ -1,5 +1,6 @@
 package com.example.task.task;
 
+import com.example.task.exception.BadRequestException;
 import com.example.task.mese.Mese;
 import com.example.task.mese.MeseRepository;
 import com.example.task.payloads.entities.TaskDTO;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TaskService {
@@ -37,7 +39,13 @@ public class TaskService {
         return taskRepository.findAllByUser_IdAndMese_idAndDataBetween(user_id,mese_id, startDate, endDate);
     }
 
-    public Task save(TaskDTO taskDTO){
+    public Task save(TaskDTO taskDTO,String year){
+        LocalDate startDate = LocalDate.parse(year + "-01-01");
+        LocalDate endDate = LocalDate.parse(year + "-12-31");
+        if(taskRepository.findByMese_idAndUser_IdAndOraAndDataBetween(taskDTO.mese_id(),taskDTO.user_id(),taskDTO.ora(),startDate,endDate).isPresent()){
+            throw new BadRequestException("Hai già un task a quest'ora");
+        }
+
         Task task = new Task();
         task.setData(LocalDate.of(Year.now().getValue(), taskDTO.mese(), taskDTO.giornoDellaSettimana()));
 task.setMese(meseRepository.findById(taskDTO.mese_id()).get());
@@ -59,8 +67,16 @@ return taskRepository.save(task);
         }
     }
 
-    public Task updateById(long task_id,TaskDTO taskDTO){
+    public Task updateById(long task_id,TaskDTO taskDTO,String year){
         Task task = taskRepository.findById(task_id).get();
+        LocalDate startDate = LocalDate.parse(year + "-01-01");
+        LocalDate endDate = LocalDate.parse(year + "-12-31");
+        if(Objects.equals(task.getOra(), taskDTO.ora())){
+            if(taskRepository.findByMese_idAndUser_IdAndOraAndDataBetween(taskDTO.mese_id(),taskDTO.user_id(),taskDTO.ora(),startDate,endDate).isPresent()){
+                throw new BadRequestException("Hai già un task a quest'ora");
+            }
+        }
+
         task.setData(LocalDate.of(Year.now().getValue(), taskDTO.mese(), taskDTO.giornoDellaSettimana()));
         task.setMese(meseRepository.findById(taskDTO.mese_id()).get());
         task.setTesto(taskDTO.testo());
@@ -80,6 +96,15 @@ return taskRepository.save(task);
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
 
         return taskRepository.findAll(pageable);
+    }
+
+
+    public List<Task> findByNomeAndMeseAndUser(String nome, long mese, long user, String year){
+        LocalDate startDate = LocalDate.parse(year + "-01-01");
+        LocalDate endDate = LocalDate.parse(year + "-12-31");
+
+       return taskRepository.findAllByUser_IdAndMese_idAndGiornoDellaSettimanaNomeAndDataBetween(user,mese,nome,startDate,endDate);
+
     }
 public Task getById(long task_id){
         return  taskRepository.findById(task_id).get();

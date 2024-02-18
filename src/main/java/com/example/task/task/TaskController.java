@@ -18,12 +18,12 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
-    @PostMapping("")
-    public Task save(@RequestBody @Validated TaskDTO taskDTO, BindingResult bindingResult){
+    @PostMapping("/{year}")
+    public Task save(@PathVariable String year,@RequestBody @Validated TaskDTO taskDTO, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new BadRequestException(bindingResult.getAllErrors());
         }
-        return taskService.save(taskDTO);
+        return taskService.save(taskDTO,year);
     }
 
     @GetMapping("")
@@ -34,9 +34,9 @@ public class TaskController {
     public Task findByIf(@PathVariable long id){
         return taskService.getById(id);
         }
-                @PutMapping("/{id}")
-    public Task putById(@PathVariable long id, @RequestBody TaskDTO taskDTO){
-        return taskService.updateById(id,taskDTO);
+                @PutMapping("/{id}/{year}")
+    public Task putById(@PathVariable long id,@PathVariable String year, @RequestBody TaskDTO taskDTO){
+        return taskService.updateById(id,taskDTO,year);
                 }
 
 
@@ -58,5 +58,10 @@ public class TaskController {
     @GetMapping("/meseAndYearAndUser/{user}/{mese}/{year}")
     public List<Task> getByMeseAndYearAndUser(@PathVariable long user,@PathVariable long mese, @PathVariable String year){
         return taskService.getAllByUserIdAndMeseIdAndYear(user,mese,year);
+    }
+
+    @GetMapping("/UserAndMeseAndDateAndNomeMese/{user}/{mese}/{year}/{nome}")
+    public List<Task> getAllByMeseUserYearAndNome(@PathVariable long user,@PathVariable long mese, @PathVariable String year, @PathVariable String nome){
+        return taskService.findByNomeAndMeseAndUser(nome,mese,user,year);
     }
 }
