@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/controller")
+@RequestMapping("/calendario")
 public class CalendarioController {
 
     @Autowired
@@ -53,5 +53,10 @@ public boolean deleteById(@PathVariable long id){
     @GetMapping("/anno/{anno}")
     public Calendario findByAnno(@PathVariable int anno){
         return  calendarioService.findByAnno(anno);
+    }
+
+    @GetMapping("/annoUser/{anno}/{user}")
+    public Calendario findByAnnoAndYear(@PathVariable int anno,@PathVariable long user){
+        return  calendarioService.findByAnnoAndUser(anno,user);
     }
 }

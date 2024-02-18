@@ -27,7 +27,6 @@ public class UserController {
         return utenteService.findByIdAndDelete(currentUser.getId());
     };
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public User findById(@PathVariable int id)  {
         return utenteService.findById(id);
     }

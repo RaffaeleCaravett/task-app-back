@@ -97,6 +97,9 @@ public List<Calendario> getAll(){
     public Calendario findByAnno(int anno) {
         return calendarioRepository.findByAnno(anno).get();
     }
+    public Calendario findByAnnoAndUser(int anno,long user) {
+        return calendarioRepository.findByAnnoAndUserList_Id(anno,user);
+    }
 
     public Calendario getById(long calendario_id){
    return calendarioRepository.findById(calendario_id).get();

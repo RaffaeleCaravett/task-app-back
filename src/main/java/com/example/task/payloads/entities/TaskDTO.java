@@ -8,9 +8,12 @@ public record TaskDTO(
         String testo,
         @NotNull(message="mese non presente")
         int mese,
-        @NotNull(message = "giorno non presente")
-        int giorno,
-
+        @NotNull(message = "giornoM non presente")
+        int giornoDelMese,
+        @NotNull(message = "giornoS non presente")
+        int giornoDellaSettimana,
+        @NotNull(message = "giornoSN non presente")
+        int giornoDellaSettimanaNome,
         @NotEmpty(message="ora non presente")
         String ora,
         @NotNull(message = "mese_id non presente")

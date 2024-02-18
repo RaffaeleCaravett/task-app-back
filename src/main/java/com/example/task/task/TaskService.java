@@ -39,10 +39,13 @@ public class TaskService {
 
     public Task save(TaskDTO taskDTO){
         Task task = new Task();
-        task.setData(LocalDate.of(Year.now().getValue(), taskDTO.mese(), taskDTO.giorno()));
+        task.setData(LocalDate.of(Year.now().getValue(), taskDTO.mese(), taskDTO.giornoDellaSettimana()));
 task.setMese(meseRepository.findById(taskDTO.mese_id()).get());
 task.setTesto(taskDTO.testo());
 task.setUser(userRepository.findById(taskDTO.user_id()).get());
+task.setGiornoDelMese(taskDTO.giornoDelMese());
+task.setGiornoDellaSettimana(taskDTO.giornoDellaSettimana());
+task.setGiornoDellaSettimanaNome(taskDTO.giornoDellaSettimanaNome());
 task.setOra(taskDTO.ora());
 return taskRepository.save(task);
     }
@@ -58,10 +61,13 @@ return taskRepository.save(task);
 
     public Task updateById(long task_id,TaskDTO taskDTO){
         Task task = taskRepository.findById(task_id).get();
-        task.setData(LocalDate.of(Year.now().getValue(), taskDTO.mese(), taskDTO.giorno()));
+        task.setData(LocalDate.of(Year.now().getValue(), taskDTO.mese(), taskDTO.giornoDellaSettimana()));
         task.setMese(meseRepository.findById(taskDTO.mese_id()).get());
         task.setTesto(taskDTO.testo());
         task.setUser(userRepository.findById(taskDTO.user_id()).get());
+        task.setGiornoDelMese(taskDTO.giornoDelMese());
+        task.setGiornoDellaSettimana(taskDTO.giornoDellaSettimana());
+        task.setGiornoDellaSettimanaNome(taskDTO.giornoDellaSettimanaNome());
         task.setOra(taskDTO.ora());
         return taskRepository.save(task);
     }

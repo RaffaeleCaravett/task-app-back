@@ -8,4 +8,6 @@ import java.util.Optional;
 @Repository
 public interface CalendarioRepository extends JpaRepository<Calendario,Long> {
 Optional<Calendario> findByAnno(int anno);
+
+    Calendario findByAnnoAndUserList_Id(int anno,long user_id);
 }
