@@ -82,7 +82,7 @@ return taskRepository.save(task);
         Task task = taskRepository.findById(task_id).get();
         LocalDate startDate = LocalDate.parse(year + "-01-01");
         LocalDate endDate = LocalDate.parse(year + "-12-31");
-        if(Objects.equals(task.getOra(), taskDTO.ora())){
+        if(!Objects.equals(task.getOra(), taskDTO.ora())){
             if(taskRepository.findByMese_idAndUser_IdAndOraAndDataBetween(taskDTO.mese_id(),taskDTO.user_id(),taskDTO.ora(),startDate,endDate).isPresent()){
                 throw new BadRequestException("Hai già un task a quest'ora");
             }
