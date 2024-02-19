@@ -37,7 +37,7 @@ public class User implements UserDetails {
 @ManyToMany(mappedBy = "userList",fetch = FetchType.EAGER)
 @JsonIgnore
 private List<Calendario> calendarioList;
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Task> tasks;
     @Override

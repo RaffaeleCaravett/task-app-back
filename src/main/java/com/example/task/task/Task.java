@@ -20,10 +20,10 @@ private String ora;
 private int giornoDelMese;
 private int giornoDellaSettimana;
 private String giornoDellaSettimanaNome;
-@ManyToOne(fetch = FetchType.EAGER)
+@ManyToOne
     @JoinColumn(name = "mese_id")
     private Mese mese;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 

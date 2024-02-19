@@ -3,12 +3,16 @@ package com.example.task.user;
 import com.example.task.calendario.Calendario;
 import com.example.task.exception.NotFoundException;
 import com.example.task.payloads.entities.UserRegistrationDTO;
+import com.example.task.task.Task;
+import com.example.task.task.TaskRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -17,6 +21,8 @@ public class UserService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    TaskRepository taskRepository;
     @Transactional
     public void deleteCalendario(User user) {
 
@@ -30,6 +36,11 @@ public class UserService {
     public boolean findByIdAndDelete(long id) throws NotFoundException {
         try{
             User found = this.findById(id);
+
+            List<Task>  tasks=found.getTasks();
+            for(Task task:tasks){
+                taskRepository.delete(task);
+            }
             deleteCalendario(found);
             utenteRepository.deleteById(found.getId());
             return true;

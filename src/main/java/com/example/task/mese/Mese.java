@@ -22,7 +22,7 @@ public class Mese {
     @ManyToMany(mappedBy = "meseList",fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Calendario> calendarioList;
-    @OneToMany(mappedBy = "mese")
+    @OneToMany(mappedBy = "mese",fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Task>tasks;
 }

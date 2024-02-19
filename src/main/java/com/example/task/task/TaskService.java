@@ -1,5 +1,6 @@
 package com.example.task.task;
 
+import com.example.task.TaskApplication;
 import com.example.task.exception.BadRequestException;
 import com.example.task.mese.Mese;
 import com.example.task.mese.MeseRepository;
@@ -17,6 +18,7 @@ import java.time.Year;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,11 +63,17 @@ task.setOra(taskDTO.ora());
 return taskRepository.save(task);
     }
 
-    public boolean deleteById(long task_id){
+    public boolean deleteById(long task_id) {
         try {
-            taskRepository.deleteById(task_id);
-            return true;
-        }catch (Exception e){
+            Optional<Task> optionalTask = taskRepository.findById(task_id);
+            if (optionalTask.isPresent()) {
+                taskRepository.deleteById(task_id);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
