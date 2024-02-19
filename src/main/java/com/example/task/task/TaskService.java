@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -33,10 +35,11 @@ public class TaskService {
     public List<Task> getAllByUserId(long user_id){
         return taskRepository.findAllByUser_Id(user_id);
     }
-    public List<Task> getAllByUserIdAndMeseIdAndYear(long user_id,long mese_id,String year) {
+    public List<Task> getAllByUserIdAndMeseIdAndYear(long user_id,long mese_id,String year,int giornoDelMese) {
         LocalDate startDate = LocalDate.parse(year + "-01-01");
         LocalDate endDate = LocalDate.parse(year + "-12-31");
-        return taskRepository.findAllByUser_IdAndMese_idAndDataBetween(user_id,mese_id, startDate, endDate);
+        return taskRepository.findAllByUser_IdAndMese_idAndDataBetweenAndGiornoDelMese(user_id,mese_id, startDate, endDate,giornoDelMese).stream().sorted(Comparator.comparing(Task::getOra))
+                .collect(Collectors.toList());
     }
 
     public Task save(TaskDTO taskDTO,String year){
@@ -47,7 +50,7 @@ public class TaskService {
         }
 
         Task task = new Task();
-        task.setData(LocalDate.of(Year.now().getValue(), taskDTO.mese(), taskDTO.giornoDellaSettimana()));
+        task.setData(LocalDate.of(Year.now().getValue(), taskDTO.mese(), taskDTO.giornoDelMese()));
 task.setMese(meseRepository.findById(taskDTO.mese_id()).get());
 task.setTesto(taskDTO.testo());
 task.setUser(userRepository.findById(taskDTO.user_id()).get());
@@ -77,7 +80,7 @@ return taskRepository.save(task);
             }
         }
 
-        task.setData(LocalDate.of(Year.now().getValue(), taskDTO.mese(), taskDTO.giornoDellaSettimana()));
+        task.setData(LocalDate.of(Year.now().getValue(), taskDTO.mese(), taskDTO.giornoDelMese()));
         task.setMese(meseRepository.findById(taskDTO.mese_id()).get());
         task.setTesto(taskDTO.testo());
         task.setUser(userRepository.findById(taskDTO.user_id()).get());

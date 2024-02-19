@@ -13,6 +13,7 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     List<Task> findAllByUser_Id(long user_id);
     List<Task> findAllByUser_IdAndMese_idAndDataBetween(long user_id,long mese_id, LocalDate startDate, LocalDate endDate);
     List<Task> findAllByUser_IdAndMese_idAndGiornoDellaSettimanaNomeAndDataBetween(long user_id,long mese_id,String nome, LocalDate startDate, LocalDate endDate);
+    List<Task> findAllByUser_IdAndMese_idAndDataBetweenAndGiornoDelMese(long user_id,long mese_id, LocalDate startDate, LocalDate endDate,int giornoDelMese);
     Optional<Task> findByMese_idAndUser_IdAndOraAndDataBetween(long mese_id, long user_id, String ora, LocalDate startDate, LocalDate endDate);
 
 }
