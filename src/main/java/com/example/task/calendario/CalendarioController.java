@@ -54,6 +54,10 @@ public boolean deleteById(@PathVariable long id){
     public Calendario findByAnno(@PathVariable int anno){
         return  calendarioService.findByAnno(anno);
     }
+    @GetMapping("/user/{id}")
+    public List<Calendario> findByUser(@PathVariable long id){
+        return  calendarioService.findByUser(id);
+    }
 
     @GetMapping("/annoUser/{anno}/{user}")
     public Calendario findByAnnoAndYear(@PathVariable int anno,@PathVariable long user){

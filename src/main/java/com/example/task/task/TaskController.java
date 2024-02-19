@@ -68,4 +68,9 @@ public class TaskController {
     public List<Task> getAllByMeseUserYearAndNome(@PathVariable long user,@PathVariable long mese, @PathVariable String year, @PathVariable String nome){
         return taskService.findByNomeAndMeseAndUser(nome,mese,user,year);
     }
+
+    @GetMapping("/user/{user}")
+    public List<Task> getByUserId(@PathVariable long user){
+        return taskService.getAllByUserId(user);
+    }
 }

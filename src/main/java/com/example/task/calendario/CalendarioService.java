@@ -104,4 +104,9 @@ public List<Calendario> getAll(){
     public Calendario getById(long calendario_id){
    return calendarioRepository.findById(calendario_id).get();
     }
+
+    public List<Calendario> findByUser(long user_id){
+        return calendarioRepository.findByUserList_Id(user_id);
+    }
+
 }
